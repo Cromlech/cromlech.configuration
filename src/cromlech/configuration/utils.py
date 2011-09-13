@@ -63,15 +63,18 @@ def load_zcml(file, features=(), execute=True):
     # Set user to system_user, so we can do anything we want
     newInteraction(SystemConfigurationParticipation())
 
-    # Hook up custom component architecture calls
-    hooks.setHooks()
+    try:
 
-    # Load server-independent site config
-    context = config.ConfigurationMachine()
-    xmlconfig.registerCommonDirectives(context)
-    for feature in features:
-        context.provideFeature(feature)
-    context = xmlconfig.file(file, context=context, execute=execute)
+        # Hook up custom component architecture calls
+        hooks.setHooks()
 
-    # Reset user
-    endInteraction()
+        # Load server-independent site config
+        context = config.ConfigurationMachine()
+        xmlconfig.registerCommonDirectives(context)
+        for feature in features:
+            context.provideFeature(feature)
+        context = xmlconfig.file(file, context=context, execute=execute)
+
+    finally:
+        # Reset user
+        endInteraction()

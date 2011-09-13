@@ -1,7 +1,12 @@
 Changelog
 =========
 
-0.1dev (unreleased)
+0.1b1 (2011-09-13)
+-------------------
+
+- insure to end interaction in load_zcml
+
+0.1a1 (2011-05-12)
 -------------------
 
 - Initial release
