@@ -1,10 +1,10 @@
 #!/usr/bin/python
 
 from zope.component import hooks
-from zope.interface import implements
 from zope.configuration import xmlconfig, config
-from zope.security.management import newInteraction, endInteraction
+from zope.interface import implements
 from zope.security.interfaces import IParticipation
+from zope.security.management import newInteraction, endInteraction
 from zope.security.management import system_user
 
 
@@ -38,13 +38,13 @@ def load_zcml(file, features=(), execute=True):
       ... ''')
       >>> zcml.close()
 
-    We can now pass the file into the `config()` function:
+    We can now pass the file into the `load_zcml()` function:
 
       # End an old interaction first
       >>> from zope.security.management import endInteraction
       >>> endInteraction()
 
-      >>> context = config(fn, features=('myFeature2', 'myFeature3'))
+      >>> context = load_zcml(fn, features=('myFeature2', 'myFeature3'))
       >>> context.hasFeature('myFeature')
       True
       >>> context.hasFeature('myFeature2')
@@ -74,6 +74,7 @@ def load_zcml(file, features=(), execute=True):
         for feature in features:
             context.provideFeature(feature)
         context = xmlconfig.file(file, context=context, execute=execute)
+        return context
 
     finally:
         # Reset user

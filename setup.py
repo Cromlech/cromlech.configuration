@@ -1,13 +1,16 @@
-from setuptools import setup, find_packages
-import os
+# -*- coding: utf-8 -*-
 
-version = '0.1b1'
+import os
+from setuptools import setup, find_packages
+
+
+version = '0.1'
 
 install_requires = [
     'setuptools',
-    'zope.interface',
     'zope.component',
     'zope.configuration',
+    'zope.interface',
     'zope.security',
     ]
 
