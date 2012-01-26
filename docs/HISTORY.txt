@@ -1,10 +1,19 @@
 Changelog
 =========
 
+0.1 (2012-01-26)
+----------------
+
+- the `load_zcml` function now returns the configuration context.
+
+- Fixed doctests.
+
+
 0.1b1 (2011-09-13)
 -------------------
 
 - insure to end interaction in load_zcml
+
 
 0.1a1 (2011-05-12)
 -------------------
