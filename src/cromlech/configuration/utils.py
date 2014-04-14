@@ -1,18 +1,6 @@
 #!/usr/bin/python
 
-from zope.component import hooks
 from zope.configuration import xmlconfig, config
-from zope.interface import implements
-from zope.security.interfaces import IParticipation
-from zope.security.management import newInteraction, endInteraction
-from zope.security.management import system_user
-
-
-class SystemConfigurationParticipation(object):
-    implements(IParticipation)
-
-    principal = system_user
-    interaction = None
 
 
 def load_zcml(file, features=(), execute=True):
@@ -40,10 +28,6 @@ def load_zcml(file, features=(), execute=True):
 
     We can now pass the file into the `load_zcml()` function:
 
-      # End an old interaction first
-      >>> from zope.security.management import endInteraction
-      >>> endInteraction()
-
       >>> context = load_zcml(fn, features=('myFeature2', 'myFeature3'))
       >>> context.hasFeature('myFeature')
       True
@@ -60,22 +44,10 @@ def load_zcml(file, features=(), execute=True):
       >>> os.remove(fn)
 
     """
-    # Set user to system_user, so we can do anything we want
-    newInteraction(SystemConfigurationParticipation())
-
-    try:
-
-        # Hook up custom component architecture calls
-        hooks.setHooks()
-
-        # Load server-independent site config
-        context = config.ConfigurationMachine()
-        xmlconfig.registerCommonDirectives(context)
-        for feature in features:
-            context.provideFeature(feature)
-        context = xmlconfig.file(file, context=context, execute=execute)
-        return context
-
-    finally:
-        # Reset user
-        endInteraction()
+    # Load server-independent site config
+    context = config.ConfigurationMachine()
+    xmlconfig.registerCommonDirectives(context)
+    for feature in features:
+        context.provideFeature(feature)
+    context = xmlconfig.file(file, context=context, execute=execute)
+    return context
