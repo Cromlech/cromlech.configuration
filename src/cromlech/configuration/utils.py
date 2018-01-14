@@ -15,7 +15,7 @@ def load_zcml(file, features=(), execute=True):
       >>> import tempfile
       >>> fn = tempfile.mktemp('.zcml')
       >>> zcml = open(fn, 'w')
-      >>> zcml.write('''
+      >>> assert zcml.write('''
       ... <configure xmlns:meta="http://namespaces.zope.org/meta"
       ...            xmlns:zcml="http://namespaces.zope.org/zcml">
       ...   <meta:provides feature="myFeature" />
